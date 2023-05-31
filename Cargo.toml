@@ -1,0 +1,11 @@
+[package]
+name = "flipull-util"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.71"
+
+[dev-dependencies]
+clap = { version = "4.3.0", features = ["derive"] }
+parse_int = "0.6.0"
