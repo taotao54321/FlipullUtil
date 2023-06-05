@@ -1,5 +1,7 @@
+use std::fmt::Write as _;
+
 #[repr(u8)]
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
 pub enum Block {
     Normal1 = 1,
     Normal2,
@@ -47,5 +49,36 @@ impl Block {
             Self::Normal4,
             Self::Wild,
         ]
+    }
+}
+
+pub type Blocks = [Option<Block>; 8 * 6];
+
+pub fn blocks_display(blocks: &Blocks) -> BlocksDisplay {
+    BlocksDisplay(blocks)
+}
+
+#[derive(Debug)]
+pub struct BlocksDisplay<'a>(&'a Blocks);
+
+impl std::fmt::Display for BlocksDisplay<'_> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for y in 0..6 {
+            for x in 0..8 {
+                let idx = 8 * y + x;
+                let ch = match self.0[idx] {
+                    None => '.',
+                    Some(Block::Normal1) => '1',
+                    Some(Block::Normal2) => '2',
+                    Some(Block::Normal3) => '3',
+                    Some(Block::Normal4) => '4',
+                    Some(Block::Wild) => '5',
+                };
+                f.write_char(ch)?;
+            }
+            writeln!(f)?;
+        }
+
+        Ok(())
     }
 }
