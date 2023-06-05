@@ -24,10 +24,7 @@ fn main() -> anyhow::Result<()> {
 
     let rom = Rom::from_ines_file(&cli.path_ines)?;
 
-    let rng_state = [
-        u8::try_from(cli.rng_state >> 8).unwrap(),
-        u8::try_from(cli.rng_state & 0xFF).unwrap(),
-    ];
+    let rng_state = cli.rng_state.to_be_bytes();
 
     let blocks = deal_blocks(&rom, cli.stage, rng_state);
 
