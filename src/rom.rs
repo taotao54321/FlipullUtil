@@ -36,7 +36,7 @@ impl Rom {
         let (prg, chr) = body.try_split_at(PRG_LEN).context("incomplete PRG")?;
         ensure!(
             chr.len() == CHR_LEN,
-            "CHR size mismatch (expect={CHR_LEN:#04X}, actual={:#04X})",
+            "CHR size mismatch (expect={CHR_LEN:#06X}, actual={:#06X})",
             chr.len()
         );
 
